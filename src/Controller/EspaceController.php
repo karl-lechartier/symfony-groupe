@@ -41,4 +41,22 @@ class EspaceController extends AbstractController
             'formulaire' => $form->createView()
         ]);
     }
+
+    #[Route('/espace/supprimer/{id}', name: 'app_espace_supprimer')]
+    public function supprimer($id, ManagerRegistry $doctrine, Request $request): Response
+    {
+        $espace = $doctrine->getRepository(Espace::class)->find($id);
+
+        if (!$espace){
+            throw $this->createNotFoundException("Pas de catégorie avec l'id $id");
+        }
+
+        $em=$doctrine->getManager();
+        $em->remove($espace);
+
+        $em->flush();
+
+        return $this->redirectToRoute("app_espace");
+
+    }
 }
