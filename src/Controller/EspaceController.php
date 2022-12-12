@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class EspaceController extends AbstractController
 {
-    #[Route('/espace', name: 'app_espace')]
+    #[Route('/', name: 'app_espace')]
     public function index(ManagerRegistry $doctrine): Response
     {
         $repo = $doctrine->getRepository(Espace::class);
