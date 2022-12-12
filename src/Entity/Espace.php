@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+
 use App\Repository\EspaceRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -22,10 +23,10 @@ class Espace
     private ?int $superficie = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $date_ouverture = null;
+    private ?\DateTimeInterface $dateOuverture = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $date_fermeture = null;
+    private ?\DateTimeInterface $dateFermeture = null;
 
     public function getId(): ?int
     {
@@ -56,26 +57,26 @@ class Espace
         return $this;
     }
 
-    public function getdate_ouverture(): ?\DateTimeInterface
+    public function getdateOuverture(): ?\DateTimeInterface
     {
-        return $this->date_ouverture;
+        return $this->dateOuverture;
     }
 
-    public function setDateOuverture(?\DateTimeInterface $date_ouverture): self
+    public function setDateOuverture(?\DateTimeInterface $dateOuverture): self
     {
-        $this->date_ouverture = $date_ouverture;
+        $this->dateOuverture = $dateOuverture;
 
         return $this;
     }
 
-    public function getdate_fermeture(): ?\DateTimeInterface
+    public function getdateFermeture(): ?\DateTimeInterface
     {
-        return $this->date_fermeture;
+        return $this->dateFermeture;
     }
 
-    public function setDateFermeture(?\DateTimeInterface $date_fermeture): self
+    public function setdateFermeture(?\DateTimeInterface $dateFermeture): self
     {
-        $this->date_fermeture = $date_fermeture;
+        $this->dateFermeture = $dateFermeture;
 
         return $this;
     }

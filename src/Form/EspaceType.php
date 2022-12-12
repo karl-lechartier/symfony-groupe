@@ -16,7 +16,8 @@ class EspaceType extends AbstractType
         $builder
             ->add('nom')
             ->add('superficie')
-            ->add('date_ouverture')
+            ->add('dateOuverture')
+            ->add('dateFermeture')
             ->add("ok", SubmitType::class, ["label"=>"OK"])
 
         ;

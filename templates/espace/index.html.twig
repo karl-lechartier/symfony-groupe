@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello EspaceController!{% endblock %}
+{% block title %}LES ESPACES{% endblock %}
 
 {% block body %}
     <h1>Gestion des Espaces</h1>
@@ -8,14 +8,16 @@
         <tr>
             <th>Titre</th>
             <th>Description</th>
-            <th></th>
+            <th>Ouverture</th>
+            <th>Fermeture</th>
+            <th>Action pas le magasin mdr</th>
         </tr>
         {% for e in espaces %}
             <tr>
                 <td>{{ e.nom }}</td>
                 <td>{{ e.superficie }}</td>
-                <td>{{ e.date_ouverture is empty ? "" : e.date_ouverture|date("d/m/Y") }}</td>
-                <td>{{ e.date_fermeture is empty ? "" : e.date_fermeture|date("d/m/Y") }}</td>
+                <td>{{ e.dateOuverture is empty ? "" : e.dateOuverture|date("d/m/Y") }}</td>
+                <td>{{ e.dateFermeture is empty ? "" : e.dateFermeture|date("d/m/Y") }}</td>
                 <td>
                     <a href="" class="btn btn-primary">modifier</a>
                     <a href="" class="btn btn-danger">supprimer</a>
