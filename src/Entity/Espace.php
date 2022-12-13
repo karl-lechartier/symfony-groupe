@@ -2,9 +2,9 @@
 
 namespace App\Entity;
 
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-
 use App\Repository\EspaceRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -16,21 +16,59 @@ class Espace
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\OneToMany(mappedBy: 'espace', targetEntity: Enclos::class)]
+    private Collection $oui;
+
     #[ORM\Column(length: 50)]
     private ?string $nom = null;
 
     #[ORM\Column]
     private ?int $superficie = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $dateOuverture = null;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $date_ouverture = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $dateFermeture = null;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $date_fermeture = null;
+
+    public function __construct()
+    {
+        $this->oui = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @return Collection<int, Enclos>
+     */
+    public function getOui(): Collection
+    {
+        return $this->oui;
+    }
+
+    public function addOui(Enclos $oui): self
+    {
+        if (!$this->oui->contains($oui)) {
+            $this->oui->add($oui);
+            $oui->setEspace($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOui(Enclos $oui): self
+    {
+        if ($this->oui->removeElement($oui)) {
+            // set the owning side to null (unless already changed)
+            if ($oui->getEspace() === $this) {
+                $oui->setEspace(null);
+            }
+        }
+
+        return $this;
     }
 
     public function getNom(): ?string
@@ -57,26 +95,26 @@ class Espace
         return $this;
     }
 
-    public function getdateOuverture(): ?\DateTimeInterface
+    public function getDateOuverture(): ?\DateTimeInterface
     {
-        return $this->dateOuverture;
+        return $this->date_ouverture;
     }
 
-    public function setDateOuverture(?\DateTimeInterface $dateOuverture): self
+    public function setDateOuverture(?\DateTimeInterface $date_ouverture): self
     {
-        $this->dateOuverture = $dateOuverture;
+        $this->date_ouverture = $date_ouverture;
 
         return $this;
     }
 
-    public function getdateFermeture(): ?\DateTimeInterface
+    public function getDateFermeture(): ?\DateTimeInterface
     {
-        return $this->dateFermeture;
+        return $this->date_fermeture;
     }
 
-    public function setdateFermeture(?\DateTimeInterface $dateFermeture): self
+    public function setDateFermeture(\DateTimeInterface $date_fermeture): self
     {
-        $this->dateFermeture = $dateFermeture;
+        $this->date_fermeture = $date_fermeture;
 
         return $this;
     }

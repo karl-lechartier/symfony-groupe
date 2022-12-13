@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LES ENCLOS{% endblock %}
+
+{% block body %}
+    <h1>Gestion des enclos de l'espace {{ espace.nom }}</h1>
+    <table class="table table-striped">
+        <tr>
+            <th>Titre</th>
+            <th>Superficie (m²)</th>
+            <th>Nombre d'animaux Max</th>
+            <th>Quarantaine</th>
+            <th>Actions</th>
+        </tr>
+        {% for e in enclos %}
+        <tr>
+            <th>{{ e.nom }}</th>
+            <th>{{ e.superficie }}</th>
+            <th>{{ e.nbAnimaux }}</th>
+            <th>
+                {% if e.quarantaine == true %} oui {% endif %}
+                {% if e.quarantaine == false %} non {% endif %}
+            </th>
+            <th>
+                <a href="" class="btn btn-primary">modifier</a>
+                <a href="{{ path("app_enclos_supprimer", {"id": e.id}) }}" class="btn btn-danger">supprimer</a>
+                <a href="" class="btn btn-warning">voir animaux</a>
+            </th>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="{{ path('app_enclos_ajouter') }}" class="btn btn-success">Ajouter un enclos</a>
+
+{% endblock %}

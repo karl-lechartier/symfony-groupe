@@ -25,9 +25,9 @@ class Enclos
     #[ORM\Column]
     private ?bool $quarantaine = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'oui')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?espace $espace_id = null;
+    private ?Espace $espace = null;
 
     public function getId(): ?int
     {
@@ -82,14 +82,14 @@ class Enclos
         return $this;
     }
 
-    public function getEspaceId(): ?espace
+    public function getEspace(): ?Espace
     {
-        return $this->espace_id;
+        return $this->espace;
     }
 
-    public function setEspaceId(?espace $espace_id): self
+    public function setEspace(?Espace $espace): self
     {
-        $this->espace_id = $espace_id;
+        $this->espace = $espace;
 
         return $this;
     }
