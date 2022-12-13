@@ -48,7 +48,7 @@ class EspaceController extends AbstractController
         $espace = $doctrine->getRepository(Espace::class)->find($id);
 
         if (!$espace){
-            throw $this->createNotFoundException("Pas de catégorie avec l'id $id");
+            throw $this->createNotFoundException("Pas d'espace avec l'id $id");
         }
 
         $em=$doctrine->getManager();

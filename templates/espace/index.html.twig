@@ -6,11 +6,11 @@
     <h1>Gestion des Espaces</h1>
     <table class="table table-striped">
         <tr>
-            <th>Titre</th>
-            <th>Description</th>
+            <th>Nom</th>
+            <th>Superficie</th>
             <th>Ouverture</th>
             <th>Fermeture</th>
-            <th>Action pas le magasin mdr</th>
+            <th>Actions</th>
         </tr>
         {% for e in espaces %}
             <tr>
@@ -22,7 +22,7 @@
                     <a href="{{ path("app_espace_modifier", {"id": e.id}) }}" class="btn btn-primary">modifier</a>
                     <a href="{{ path("app_espace_supprimer", {"id": e.id}) }}" class="btn btn-danger">supprimer</a>
                     <a href="" class="btn btn-warning">voir animaux</a>
-                    <a href="{{ path('app_enclos', {'id':e.id}) }}" class="btn btn-warning">voir enclos</a>
+                    <a href="{{ path("app_enclo_voir", {"id": e.id}) }}" class="btn btn-warning">voir enclos</a>
                 </td>
 
 

@@ -2,9 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\EspaceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+
+use App\Repository\EspaceRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -16,59 +18,29 @@ class Espace
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToMany(mappedBy: 'espace', targetEntity: Enclos::class)]
-    private Collection $oui;
-
     #[ORM\Column(length: 50)]
     private ?string $nom = null;
 
     #[ORM\Column]
     private ?int $superficie = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $date_ouverture = null;
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $dateOuverture = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $date_fermeture = null;
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $dateFermeture = null;
+
+    #[ORM\OneToMany(mappedBy: 'espaceID', targetEntity: Enclo::class)]
+    private Collection $enclos;
 
     public function __construct()
     {
-        $this->oui = new ArrayCollection();
+        $this->enclos = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @return Collection<int, Enclos>
-     */
-    public function getOui(): Collection
-    {
-        return $this->oui;
-    }
-
-    public function addOui(Enclos $oui): self
-    {
-        if (!$this->oui->contains($oui)) {
-            $this->oui->add($oui);
-            $oui->setEspace($this);
-        }
-
-        return $this;
-    }
-
-    public function removeOui(Enclos $oui): self
-    {
-        if ($this->oui->removeElement($oui)) {
-            // set the owning side to null (unless already changed)
-            if ($oui->getEspace() === $this) {
-                $oui->setEspace(null);
-            }
-        }
-
-        return $this;
     }
 
     public function getNom(): ?string
@@ -95,26 +67,56 @@ class Espace
         return $this;
     }
 
-    public function getDateOuverture(): ?\DateTimeInterface
+    public function getdateOuverture(): ?\DateTimeInterface
     {
-        return $this->date_ouverture;
+        return $this->dateOuverture;
     }
 
-    public function setDateOuverture(?\DateTimeInterface $date_ouverture): self
+    public function setDateOuverture(?\DateTimeInterface $dateOuverture): self
     {
-        $this->date_ouverture = $date_ouverture;
+        $this->dateOuverture = $dateOuverture;
 
         return $this;
     }
 
-    public function getDateFermeture(): ?\DateTimeInterface
+    public function getdateFermeture(): ?\DateTimeInterface
     {
-        return $this->date_fermeture;
+        return $this->dateFermeture;
     }
 
-    public function setDateFermeture(\DateTimeInterface $date_fermeture): self
+    public function setdateFermeture(?\DateTimeInterface $dateFermeture): self
     {
-        $this->date_fermeture = $date_fermeture;
+        $this->dateFermeture = $dateFermeture;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Enclo>
+     */
+    public function getEnclos(): Collection
+    {
+        return $this->enclos;
+    }
+
+    public function addEnclo(Enclo $enclo): self
+    {
+        if (!$this->enclos->contains($enclo)) {
+            $this->enclos->add($enclo);
+            $enclo->setEspaceID($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEnclo(Enclo $enclo): self
+    {
+        if ($this->enclos->removeElement($enclo)) {
+            // set the owning side to null (unless already changed)
+            if ($enclo->getEspaceID() === $this) {
+                $enclo->setEspaceID(null);
+            }
+        }
 
         return $this;
     }
