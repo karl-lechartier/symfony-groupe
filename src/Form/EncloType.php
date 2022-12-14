@@ -22,6 +22,7 @@ class EncloType extends AbstractType
             ->add('espaceID', EntityType::class, [
                 'class'=>Espace::class,
                 'choice_label'=>"nom",
+                'label'=>"Espace",
                 'multiple'=>false,
                 'expanded'=>false
             ])
