@@ -23,7 +23,7 @@ class Enclo
     #[ORM\Column]
     private ?int $animauxMax = null;
 
-    #[ORM\Column(type: Types::SMALLINT)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private ?int $quarantaine = null;
 
     #[ORM\ManyToOne(inversedBy: 'enclos')]
