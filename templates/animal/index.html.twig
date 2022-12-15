@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LES ESPACES{% endblock %}
+
+{% block body %}
+    <table class="table table-striped">
+        <tr>
+            <th>Numero d'identification</th>
+            <th>Nom</th>
+            <th>Date de naissance</th>
+            <th>Date d'arrivée</th>
+            <th>Date de départ</th>
+            <th>Zoo est propriétaire</th>
+            <th>Genre</th>
+            <th>Espèce</th>
+            <th>Sexe</th>
+            <th>Stérilisé</th>
+            <th>En quarantaine</th>
+        </tr>
+        {% for a in animal %}
+        <tr>
+            <td>{{ a.numeroIdentification }}</td>
+            <td>{{ a.nom }}</td>
+            <td>{{ a.dateNaissance is empty ? "" : a.dateNaissance|date("d/m/Y") }}</td>
+            <td>{{ a.dateArrivee is empty ? "" : a.dateArrivee|date("d/m/Y") }}</td>
+            <td>{{ a.dateDepart is empty ? "" : a.dateDepart|date("d/m/Y") }}</td>
+            <td>{{ a.zooEstProprietaire }}</td>
+            <td>{{ a.genre }}</td>
+            <td>{{ a.espece }}</td>
+            <td>{{ a.sexe }}</td>
+            <td>{{ a.sterile }}</td>
+            <td>{{ a.enQuarantaine }}</td>
+
+            <td>
+                <a href="{{ path("app_animal_modifier", {"id": a.id}) }}" class="btn btn-primary">modifier</a>
+
+                <a href="{{ path("app_animal_supprimer", {"id": a.id}) }}" class="btn btn-danger">supprimer</a>
+            </td>
+
+
+            {% endfor %}
+    </table>
+    <a href="{{path("app_animal_ajouter")}}" class="btn btn-success">Ajouter un animal</a>
+
+{% endblock %}
