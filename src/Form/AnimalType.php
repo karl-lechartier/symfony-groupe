@@ -6,7 +6,6 @@ use App\Entity\Animal;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -24,12 +23,11 @@ class AnimalType extends AbstractType
                 ])
             ->add('nom')
             ->add('dateNaissance')
-            ->add('dateArrivee', DateType::class, [ //Doit être la valeur de creation de l'espace où il est
-                'required'=>true
+            ->add('dateArrivee', DateType::class, [
+                'required'=>true,
+                'data' => new \DateTime("now")
                 ])
-            ->add('dateDepart', DateType::class, [
-                'required'=>false
-                ])
+            ->add('dateDepart')
             ->add('zooEstProprietaire')
             ->add('genre', TextType::class, [
                 'required'=>true
@@ -45,7 +43,7 @@ class AnimalType extends AbstractType
                     ]
                 ])
             ->add('sterile', null, [
-                'disabled'=>true
+                'disabled'=>false
                 ])
             ->add('enQuarantaine')
             ->add("ok", SubmitType::class, ["label"=>"OK"])
