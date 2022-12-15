@@ -105,7 +105,7 @@ class Animal
         return $this->dateDepart;
     }
 
-    public function setDateDepart(\DateTimeInterface $dateDepart): self
+    public function setDateDepart(?\DateTimeInterface $dateDepart): self
     {
         $this->dateDepart = $dateDepart;
 

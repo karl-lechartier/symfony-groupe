@@ -3,10 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Animal;
-use App\Entity\Enclo;
-use App\Entity\Espace;
 use App\Form\AnimalType;
-use App\Form\EncloType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,9 +16,6 @@ class AnimalController extends AbstractController
     public function index(ManagerRegistry $doctrine): Response
     {
         $animal = $doctrine->getRepository(Animal::class)->findAll();
-        /*if (!$animal) {
-            throw $this->createNotFoundException("Aucun animal avec l'id $id");
-        }*/
 
         return $this->render('animal/index.html.twig', [
             'animal' => $animal,

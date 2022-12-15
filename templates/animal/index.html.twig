@@ -32,9 +32,8 @@
             <td>{{ a.enQuarantaine }}</td>
 
             <td>
-                <a href="{{ path("app_animal_modifier", {"id": a.id}) }}" class="btn btn-primary">modifier</a>
-
-                <a href="{{ path("app_animal_supprimer", {"id": a.id}) }}" class="btn btn-danger">supprimer</a>
+                <a href="{{ path("app_animal_modifier", {"id": a.id}) }}" class="btn btn-primary"><span class="fas fa-pencil"></span></a>
+                <a href="{{ path("app_animal_supprimer", {"id": a.id}) }}" class="btn btn-danger"><span class="fas fa-trash-can"></span></a>
             </td>
 
 
