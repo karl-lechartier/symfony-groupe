@@ -1,5 +1,5 @@
 {% for e in espaces %}
     <li class="nav-item">
-        <a class="nav-link" href="">{{ e.nom }}</a>
+        <a class="nav-link" href="{{ path("app_enclo_voir", {"id": e.id}) }}">{{ e.nom }}</a>
     </li>
 {% endfor %}

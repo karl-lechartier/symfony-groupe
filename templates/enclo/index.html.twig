@@ -10,6 +10,7 @@
             <th>Superficie</th>
             <th>Animaux maximum</th>
             <th>Quarantaine</th>
+            <th>Actions</th>
         </tr>
         {% for e in enclos %}
             <tr>
@@ -19,11 +20,10 @@
                 <td>{{ e.quarantaine }}</td>
 
                 <td>
-                    <a href="{{ path("app_enclo_modifier", {"id": e.id}) }}" class="btn btn-primary">modifier</a>
+                    <a href="{{ path("app_enclo_modifier", {"id": e.id}) }}" class="btn btn-primary"><span class="fas fa-pencil"></span></a>
 
-                    <a href="{{ path("app_enclo_supprimer", {"id": e.id}) }}" class="btn btn-danger">supprimer</a>
+                    <a href="{{ path("app_enclo_supprimer", {"id": e.id}) }}" class="btn btn-danger"><span class="fas fa-trash-can"></span></a>
                     <a href="" class="btn btn-warning">voir animaux</a>
-                    <a href="" class="btn btn-warning">voir enclos</a>
                 </td>
 
 

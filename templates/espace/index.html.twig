@@ -19,8 +19,8 @@
                 <td>{{ e.dateOuverture is empty ? "" : e.dateOuverture|date("d/m/Y") }}</td>
                 <td>{{ e.dateFermeture is empty ? "" : e.dateFermeture|date("d/m/Y") }}</td>
                 <td>
-                    <a href="{{ path("app_espace_modifier", {"id": e.id}) }}" class="btn btn-primary">modifier</a>
-                    <a href="{{ path("app_espace_supprimer", {"id": e.id}) }}" class="btn btn-danger">supprimer</a>
+                    <a href="{{ path("app_espace_modifier", {"id": e.id}) }}" class="btn btn-primary"><span class="fas fa-pencil"></span></a>
+                    <a href="{{ path("app_espace_supprimer", {"id": e.id}) }}" class="btn btn-danger"><span class="fas fa-trash-can"></span></a>
                     <a href="{{ path("app_animal_voir") }}" class="btn btn-warning">voir animaux</a>
                     <a href="{{ path("app_enclo_voir", {"id": e.id}) }}" class="btn btn-warning">voir enclos</a>
                 </td>
