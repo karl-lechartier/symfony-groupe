@@ -20,15 +20,19 @@ class AnimalType extends AbstractType
             ->add('numeroIdentification', TextType::class, [
                 'attr'=>['minlength'=>"14", 'maxlength'=>"14", 'size'=>"14"],
                 'required'=>true,
-                'label'=>"Numéro d'identification (14 chiffres)"
-                ])
+                'label'=>"Numéro d'identification (14 chiffres)"])
             ->add('nom')
-            ->add('dateNaissance')
+            ->add('dateNaissance', DateType::class, array(
+                "format" => 'ddMMyyyy'
+            ))
             ->add('dateArrivee', DateType::class, [
                 'required'=>true,
-                'data' => new \DateTime("now")
-                ])
-            ->add('dateDepart')
+                'data' => new \DateTime("now"),
+                "format" => 'ddMMyyyy'
+            ])
+            ->add('dateDepart', DateType::class, array(
+                "format" => 'ddMMyyyy'
+            ))
             ->add('zooEstProprietaire')
             ->add('genre', TextType::class, [
                 'required'=>true
