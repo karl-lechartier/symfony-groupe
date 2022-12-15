@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Animal;
+use phpDocumentor\Reflection\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -43,12 +44,21 @@ class AnimalType extends AbstractType
                     ]
                 ])
             ->add('sterile', null, [
-                'disabled'=>false
-                ])
+                'disabled'=>true
+            ])
             ->add('enQuarantaine')
             ->add("ok", SubmitType::class, ["label"=>"OK"])
         ;
+
+        $test = $builder->getData();
+
+        if ($test->getSexe() != null) {
+            $builder->add('sterile', null, [
+                'disabled'=>false
+            ]);
+        }
     }
+
 
     public function configureOptions(OptionsResolver $resolver): void
     {
