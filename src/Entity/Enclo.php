@@ -71,12 +71,12 @@ class Enclo
         return $this;
     }
 
-    public function getQuarantaine(): ?int
+    public function getQuarantaine(): ?bool
     {
         return $this->quarantaine;
     }
 
-    public function setQuarantaine(int $quarantaine): self
+    public function setQuarantaine(bool $quarantaine): self
     {
         $this->quarantaine = $quarantaine;
 
