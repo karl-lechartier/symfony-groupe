@@ -32,8 +32,17 @@ class AnimalController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()){
             $numeroIdentification = $form['numeroIdentification']->getData();
+            $dateNaissance = $form['dateNaissance']->getData();
+            $dateArrive = $form['dateArrivee']->getData();
+            $dateDepart = $form['dateDepart']->getData();
             $verifnumid = $doctrine->getRepository(Animal::class)->findBy(array('numeroIdentification' => $numeroIdentification));
 
+            if ($dateNaissance>$dateArrive){
+                throw new \Exception("La date d'arriver ne pas pas être plus ancienne que la date de naissance");
+            }
+            if ($dateArrive>$dateDepart){
+                throw new \Exception("La date de départ ne pas pas être plus ancienne que la date d'arriver");
+            }
             if (!(preg_match('/^[0-9]+$/', $numeroIdentification))){
                 throw new \Exception("Le numéro d'identification ne doit pas contenir de lettre ou caractères spéciaux : ".$numeroIdentification);
             }
