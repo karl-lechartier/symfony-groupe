@@ -21,7 +21,7 @@
                 <td>
                     <a href="{{ path("app_espace_modifier", {"id": e.id}) }}" class="btn btn-primary">modifier</a>
                     <a href="{{ path("app_espace_supprimer", {"id": e.id}) }}" class="btn btn-danger">supprimer</a>
-                    <a href="" class="btn btn-warning">voir animaux</a>
+                    <a href="{{ path("app_animal_voir") }}" class="btn btn-warning">voir animaux</a>
                     <a href="{{ path("app_enclo_voir", {"id": e.id}) }}" class="btn btn-warning">voir enclos</a>
                 </td>
 
