@@ -47,20 +47,10 @@ class AnimalType extends AbstractType
                     'Femelle'=> 'Femelle'
                     ]
                 ])
-            ->add('sterile', null, [
-                'disabled'=>true
-            ])
+            ->add('sterile')
             ->add('enQuarantaine')
             ->add("ok", SubmitType::class, ["label"=>"OK"])
         ;
-
-        $test = $builder->getData();
-
-        if ($test->getSexe() != null) {
-            $builder->add('sterile', null, [
-                'disabled'=>false
-            ]);
-        }
     }
 
 

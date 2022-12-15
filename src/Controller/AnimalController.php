@@ -35,6 +35,8 @@ class AnimalController extends AbstractController
             $dateNaissance = $form['dateNaissance']->getData();
             $dateArrive = $form['dateArrivee']->getData();
             $dateDepart = $form['dateDepart']->getData();
+            $sexe = $form['sexe']->getData();
+            $sterile = $form['sterile']->getData();
             $verifnumid = $doctrine->getRepository(Animal::class)->findBy(array('numeroIdentification' => $numeroIdentification));
 
             if ($dateNaissance>$dateArrive){
@@ -49,7 +51,9 @@ class AnimalController extends AbstractController
             if (sizeof($verifnumid)){
                 throw new \Exception("Il y a déjà un animal avec le numéro d'identification : ".$numeroIdentification);
             }
-
+            if ($sexe == null && $sterile == true) {
+                throw new \Exception("Son sexe n'est pas défini, il ne peut pas être stérile");
+            }
 
             $em = $doctrine->getManager();
             $em->persist($animal);
@@ -96,6 +100,8 @@ class AnimalController extends AbstractController
             $dateNaissance = $form['dateNaissance']->getData();
             $dateArrive = $form['dateArrivee']->getData();
             $dateDepart = $form['dateDepart']->getData();
+            $sexe = $form['sexe']->getData();
+            $sterile = $form['sterile']->getData();
             $verifnumid = $doctrine->getRepository(Animal::class)->findBy(array('numeroIdentification' => $numeroIdentification));
 
             if ($dateNaissance>$dateArrive){
@@ -109,6 +115,9 @@ class AnimalController extends AbstractController
             }
             if (sizeof($verifnumid)>1){
                 throw new \Exception("Il y a déjà un animal avec le numéro d'identification : ".$numeroIdentification);
+            }
+            if ($sexe == null && $sterile == true) {
+                throw new \Exception("Son sexe n'est pas défini, il ne peut pas être stérile");
             }
 
             $em=$doctrine->getManager();
