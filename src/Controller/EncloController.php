@@ -83,7 +83,7 @@ class EncloController extends AbstractController
             $em=$doctrine->getManager();
             $em->persist($enclo);
             $em->flush();
-            return $this->redirectToRoute("app_espace");
+            return $this->redirectToRoute("app_enclo_voir", ["id" => $enclo->getEspaceID()->getId()]);
         }
 
         return $this->render("enclo/modifier.html.twig",[

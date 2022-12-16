@@ -23,12 +23,13 @@
                     <a href="{{ path("app_enclo_modifier", {"id": e.id}) }}" class="btn btn-primary"><span class="fas fa-pencil"></span></a>
 
                     <a href="{{ path("app_enclo_supprimer", {"id": e.id}) }}" class="btn btn-danger"><span class="fas fa-trash-can"></span></a>
-                    <a href="{{ path("app_animal_voir") }}" class="btn btn-warning">voir animaux</a>
+                    <a href="{{ path("app_animal_voir", {"id": e.id}) }}" class="btn btn-warning">voir animaux</a>
                 </td>
 
 
                 {% endfor %}
     </table>
     <a href="{{path("app_enclo_ajouter")}}" class="btn btn-success">Ajouter un enclos</a>
+
 
 {% endblock %}

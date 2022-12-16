@@ -3,7 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Animal;
+use App\Entity\Enclo;
 use phpDocumentor\Reflection\Type;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -46,6 +48,13 @@ class AnimalType extends AbstractType
                 ])
             ->add('sterile')
             ->add('enQuarantaine')
+            ->add('encloID', EntityType::class, [
+                'class'=>Enclo::class,
+                'choice_label'=>"nom",
+                'label'=>"Enclos",
+                'multiple'=>false,
+                'expanded'=>false
+            ])
             ->add("ok", SubmitType::class, ["label"=>"OK"])
         ;
     }

@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Animal;
+use App\Entity\Enclo;
+use App\Entity\Espace;
 use App\Form\AnimalmodifyType;
 use App\Form\AnimalType;
 use Doctrine\Persistence\ManagerRegistry;
@@ -13,19 +15,30 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AnimalController extends AbstractController
 {
-    #[Route('/animal/voir', name: 'app_animal_voir')]
-    public function index(ManagerRegistry $doctrine): Response
+    #[Route('/animal/voir/{id}', name: 'app_animal_voir')]
+    public function index($id, ManagerRegistry $doctrine): Response
     {
-        $animal = $doctrine->getRepository(Animal::class)->findAll();
+        $enclo = $doctrine->getRepository(Enclo::class)->find($id);
+        //si on n'a rien trouvé -> 404
+        if (!$enclo) {
+            throw $this->createNotFoundException("Aucun enclos avec l'id $id");
+        }
 
         return $this->render('animal/index.html.twig', [
-            'animal' => $animal,
+            'enclo' => $enclo,
+            "animal" => $enclo->getAnimaux()
         ]);
     }
 
-    #[Route('/animal/ajouter', name: 'app_animal_ajouter')]
-    public function ajouter(ManagerRegistry $doctrine, Request $request): Response
+    #[Route('/animal/ajouter/{id}', name: 'app_animal_ajouter')]
+    public function ajouter($id, ManagerRegistry $doctrine, Request $request): Response
     {
+        $enclo = $doctrine->getRepository(Enclo::class)->find($id);
+        $nbrAnimaux = sizeof($enclo->getAnimaux());
+
+        if ($nbrAnimaux>=$enclo->getAnimauxMax()){
+            throw new \Exception("Vous ne pouvez pas rajoutez d'animaux a cet enclos");
+        }
 
         $animal = new Animal();
         $form = $this->createForm(AnimalType::class,$animal);
@@ -38,12 +51,13 @@ class AnimalController extends AbstractController
             $dateDepart = $form['dateDepart']->getData();
             $sexe = $form['sexe']->getData();
             $sterile = $form['sterile']->getData();
+            $encloID = $form['encloID']->getData();
             $verifnumid = $doctrine->getRepository(Animal::class)->findBy(array('numeroIdentification' => $numeroIdentification));
 
-            if ($dateNaissance>$dateArrive){
+            if ($dateNaissance>$dateArrive && isset($dateNaissance)){
                 throw new \Exception("La date d'arriver ne pas pas être plus ancienne que la date de naissance");
             }
-            if ($dateArrive>$dateDepart){
+            if ($dateArrive>$dateDepart && isset($dateDepart)){
                 throw new \Exception("La date de départ ne pas pas être plus ancienne que la date d'arriver");
             }
             if (!(preg_match('/^[0-9]+$/', $numeroIdentification))){
@@ -59,7 +73,7 @@ class AnimalController extends AbstractController
             $em = $doctrine->getManager();
             $em->persist($animal);
             $em->flush();
-            return $this->redirectToRoute("app_animal_voir");
+            return $this->redirectToRoute("app_animal_voir", ["id" => $animal->getEncloID()->getId()]);
         }
 
         return $this->render('animal/ajouter.html.twig', [
@@ -105,10 +119,10 @@ class AnimalController extends AbstractController
             $sterile = $form['sterile']->getData();
             $verifnumid = $doctrine->getRepository(Animal::class)->findBy(array('numeroIdentification' => $numeroIdentification));
 
-            if ($dateNaissance>$dateArrive){
+            if ($dateNaissance>$dateArrive && isset($dateNaissance)){
                 throw new \Exception("La date d'arriver ne pas pas être plus ancienne que la date de naissance");
             }
-            if ($dateArrive>$dateDepart){
+            if ($dateArrive>$dateDepart && isset($dateDepart)){
                 throw new \Exception("La date de départ ne pas pas être plus ancienne que la date d'arriver");
             }
             if (!(preg_match('/^[0-9]+$/', $numeroIdentification))){

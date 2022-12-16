@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EncloRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -29,6 +31,14 @@ class Enclo
     #[ORM\ManyToOne(inversedBy: 'enclos')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Espace $espaceID = null;
+
+    #[ORM\OneToMany(mappedBy: 'encloID', targetEntity: Animal::class)]
+    private Collection $animaux;
+
+    public function __construct()
+    {
+        $this->animaux = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -91,6 +101,36 @@ class Enclo
     public function setEspaceID(?Espace $espaceID): self
     {
         $this->espaceID = $espaceID;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Animal>
+     */
+    public function getAnimaux(): Collection
+    {
+        return $this->animaux;
+    }
+
+    public function addAnimaux(Animal $animaux): self
+    {
+        if (!$this->animaux->contains($animaux)) {
+            $this->animaux->add($animaux);
+            $animaux->setEncloID($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnimaux(Animal $animaux): self
+    {
+        if ($this->animaux->removeElement($animaux)) {
+            // set the owning side to null (unless already changed)
+            if ($animaux->getEncloID() === $this) {
+                $animaux->setEncloID(null);
+            }
+        }
 
         return $this;
     }

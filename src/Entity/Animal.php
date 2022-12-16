@@ -47,6 +47,10 @@ class Animal
     #[ORM\Column]
     private ?bool $enQuarantaine = null;
 
+    #[ORM\ManyToOne(inversedBy: 'animaux')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Enclo $encloID = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -180,6 +184,18 @@ class Animal
     public function setEnQuarantaine(bool $enQuarantaine): self
     {
         $this->enQuarantaine = $enQuarantaine;
+
+        return $this;
+    }
+
+    public function getEncloID(): ?Enclo
+    {
+        return $this->encloID;
+    }
+
+    public function setEncloID(?Enclo $encloID): self
+    {
+        $this->encloID = $encloID;
 
         return $this;
     }

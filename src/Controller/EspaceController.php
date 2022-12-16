@@ -31,7 +31,17 @@ class EspaceController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
-            $em = $doctrine->getManager();
+            $dateOverture = $form['dateOuverture']->getData();
+            $dateFermeture = $form['dateFermeture']->getData();
+
+            if (isset($dateFermeture) && !isset($dateOverture)) {
+                throw new \Exception("La date de fermeture ne peut pas être remplie si la date d'ouverture n'est pas remplie");
+            }
+            if ($dateFermeture<=$dateOverture && isset($dateOverture)) {
+                throw new \Exception("La date de fermeture dois être plus récente que la date d'ouverture");
+            }
+
+                $em = $doctrine->getManager();
             $em->persist($espace);
             $em->flush();
             return $this->redirectToRoute("app_espace");
@@ -72,6 +82,15 @@ class EspaceController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
+            $dateOverture = $form['dateOuverture']->getData();
+            $dateFermeture = $form['dateFermeture']->getData();
+
+            if (isset($dateFermeture) && !isset($dateOverture)) {
+                throw new \Exception("La date de fermeture ne peut pas être remplie si la date d'ouverture n'est pas remplie");
+            }
+            if ($dateFermeture<=$dateOverture && isset($dateOverture)) {
+                throw new \Exception("La date de fermeture dois être plus récente que la date d'ouverture");
+            }
 
             $em=$doctrine->getManager();
             $em->persist($espace);
