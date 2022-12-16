@@ -6,7 +6,6 @@ use App\Entity\Animal;
 use phpDocumentor\Reflection\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -14,7 +13,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormEvents;
 
-class AnimalType extends AbstractType
+class AnimalmodifyTypeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -25,10 +24,7 @@ class AnimalType extends AbstractType
                 'label'=>"Numéro d'identification (14 chiffres)"])
             ->add('nom')
             ->add('dateNaissance')
-            ->add('dateArrivee', DateType::class, [
-                'required'=>true,
-                'data' => new \DateTime("now"),
-            ])
+            ->add('dateArrivee')
             ->add('dateDepart')
             ->add('zooEstProprietaire')
             ->add('genre', TextType::class, [
