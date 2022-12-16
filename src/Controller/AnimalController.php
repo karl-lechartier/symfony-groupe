@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Animal;
-use App\Form\AnimalmodifyTypeType;
+use App\Form\AnimalmodifyType;
 use App\Form\AnimalType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -93,7 +93,7 @@ class AnimalController extends AbstractController
             throw $this->createNotFoundException("Pas d'animaux avec l'id $id");
         }
 
-        $form=$this->createForm(AnimalmodifyTypeType::class, $animal);
+        $form=$this->createForm(AnimalmodifyType::class, $animal);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){

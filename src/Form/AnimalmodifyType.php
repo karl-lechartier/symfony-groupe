@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormEvents;
 
-class AnimalmodifyTypeType extends AbstractType
+class AnimalmodifyType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
