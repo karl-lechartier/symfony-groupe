@@ -53,9 +53,13 @@ class EncloController extends AbstractController
     public function supprimer($id, ManagerRegistry $doctrine, Request $request): Response
     {
         $enclo = $doctrine->getRepository(Enclo::class)->find($id);
+        $nbrAnimaux = sizeof($enclo->getAnimaux());
 
         if (!$enclo){
             throw $this->createNotFoundException("Pas d'enclos avec l'id $id");
+        }
+        if ($nbrAnimaux!=0){
+            throw new \Exception("Vous ne pouvez pas supprimer un enclos qui contient des animaux");
         }
 
         $em=$doctrine->getManager();
@@ -63,7 +67,7 @@ class EncloController extends AbstractController
 
         $em->flush();
 
-        return $this->redirectToRoute("app_espace");
+        return $this->redirectToRoute("app_enclo_voir", ["id" => $enclo->getEspaceID()->getId()]);
     }
 
     #[Route('/enclos/modifier/{id}', name: 'app_enclo_modifier')]
@@ -79,6 +83,19 @@ class EncloController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()){
+            $quarantaine  = $form['quarantaine']->getData();
+
+            if ($quarantaine==1){
+                $animaux = $enclo->getAnimaux();
+                foreach ($animaux as $a){
+                    $a->setEnQuarantaine(true);
+                }
+            }else{
+                $animaux = $enclo->getAnimaux();
+                foreach ($animaux as $a){
+                    $a->setEnQuarantaine(false);
+                }
+            }
 
             $em=$doctrine->getManager();
             $em->persist($enclo);

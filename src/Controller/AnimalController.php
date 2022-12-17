@@ -37,7 +37,7 @@ class AnimalController extends AbstractController
         $nbrAnimaux = sizeof($enclo->getAnimaux());
 
         if ($nbrAnimaux>=$enclo->getAnimauxMax()){
-            throw new \Exception("Vous ne pouvez pas rajoutez d'animaux a cet enclos");
+            throw new \Exception("Vous ne pouvez pas rajouter d'animaux a cet enclos");
         }
 
         $animal = new Animal();
@@ -73,6 +73,14 @@ class AnimalController extends AbstractController
             $em = $doctrine->getManager();
             $em->persist($animal);
             $em->flush();
+
+            if (($enclo->getQuarantaine())==1){
+                $animal->setEnQuarantaine(true);
+                $em = $doctrine->getManager();
+                $em->persist($animal);
+                $em->flush();
+            }
+
             return $this->redirectToRoute("app_animal_voir", ["id" => $animal->getEncloID()->getId()]);
         }
 
@@ -135,10 +143,20 @@ class AnimalController extends AbstractController
                 throw new \Exception("Son sexe n'est pas défini, il ne peut pas être stérile");
             }
 
+            $quarantaine = $form['enQuarantaine']->getData();
+            if ($quarantaine!=true){
+                $enclo = $animal->getEncloID();
+
+                $nbrAnimauxQuarantaine = sizeof($doctrine->getRepository(Animal::class)->findBy(array('enQuarantaine' => true)));
+                if ($nbrAnimauxQuarantaine==1){
+                    $enclo->setQuarantaine(false);
+                }
+            }
+
             $em=$doctrine->getManager();
             $em->persist($animal);
             $em->flush();
-            return $this->redirectToRoute("app_animal_voir");
+            return $this->redirectToRoute("app_animal_voir", ["id" => $animal->getEncloID()->getId()]);
         }
 
         return $this->render("animal/modifier.html.twig",[
